@@ -1,1 +1,416 @@
+@prefix ismap: <https://example.org/profiles/ismar-dataset-metadata/1.0.0#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix prof:  <http://www.w3.org/ns/dx/prof/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 
+#################################################################
+# ISMAR Dataset Metadata Application Profile
+# Version: 1.0.0-draft
+# Format: RDF/Turtle + SHACL
+#
+# NOTE
+# Replace the base namespace https://example.org/profiles/ismar-dataset-metadata/1.0.0#
+# with the final persistent URI chosen for the profile.
+#################################################################
+
+#################################################################
+# Profile metadata
+#################################################################
+
+ismap:profile
+    a prof:Profile ;
+    dct:title "ISMAR Dataset Metadata Application Profile"@en ;
+    dct:description "A compact metadata application profile for datasets exposed through ERDDAP, THREDDS, CKAN and similar data/metadata services. Each metadata field is described directly as a SHACL property shape, using existing vocabularies only."@en ;
+    dct:creator "CNR-ISMAR" ;
+    dct:issued "2026-06-21"^^xsd:date ;
+    dct:modified "2026-06-21"^^xsd:date ;
+    dct:version "1.0.0-draft" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    prof:isProfileOf
+        <https://cfconventions.org/> ,
+        <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ,
+        <https://schema.datacite.org/> ,
+        <https://www.w3.org/TR/vocab-dcat-3/> ;
+    rdfs:seeAlso ismap:DatasetShape .
+
+#################################################################
+# Main dataset-level shape
+#################################################################
+
+ismap:DatasetShape
+    a sh:NodeShape ;
+    sh:name "ISMAR dataset metadata shape"@en ;
+    sh:description "Shape collecting the global metadata fields required or recommended by the ISMAR Dataset Metadata Application Profile."@en ;
+    sh:property
+        ismap:title ,
+        ismap:summary ,
+        ismap:institution ,
+        ismap:creator_name ,
+        ismap:creator_email ,
+        ismap:metadata_profile ,
+        ismap:metadata_profile_version ,
+        ismap:Conventions ,
+        ismap:keywords ,
+        ismap:license ,
+        ismap:sourceUrl ,
+        ismap:infoUrl ,
+        ismap:time_coverage_start ,
+        ismap:time_coverage_end ,
+        ismap:geospatial_lat_min ,
+        ismap:geospatial_lat_max ,
+        ismap:geospatial_lon_min ,
+        ismap:geospatial_lon_max .
+
+#################################################################
+# Main variable-level shape
+#################################################################
+
+ismap:VariableShape
+    a sh:NodeShape ;
+    sh:name "ISMAR variable metadata shape"@en ;
+    sh:description "Shape collecting metadata fields intended to describe individual dataset variables."@en ;
+    sh:property
+        ismap:long_name ,
+        ismap:standard_name ,
+        ismap:units ,
+        ismap:ioos_category ,
+        ismap:FillValue ,
+        ismap:missing_value .
+
+#################################################################
+# Global attributes
+#################################################################
+
+ismap:title
+    a sh:PropertyShape ;
+    sh:path ismap:title ;
+    sh:name "title" ;
+    skos:prefLabel "title"@en ;
+    skos:definition "A short human-readable title describing the dataset."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Must not be empty. Omit neither the field nor its value."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "The global attribute 'title' is mandatory and must be a non-empty string."@en .
+
+ismap:summary
+    a sh:PropertyShape ;
+    sh:path ismap:summary ;
+    sh:name "summary" ;
+    skos:prefLabel "summary"@en ;
+    skos:definition "A concise textual description of the dataset content, purpose and context."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Must not be empty. Prefer a short paragraph rather than a list of keywords."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "The global attribute 'summary' is mandatory and must be a non-empty string."@en .
+
+ismap:institution
+    a sh:PropertyShape ;
+    sh:path ismap:institution ;
+    sh:name "institution" ;
+    skos:prefLabel "institution"@en ;
+    skos:definition "The institution responsible for producing, managing or publishing the dataset."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Use the official organisation name whenever possible."@en ;
+    dct:conformsTo <https://cfconventions.org/> , <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "The global attribute 'institution' is mandatory and must be a non-empty string."@en .
+
+ismap:creator_name
+    a sh:PropertyShape ;
+    sh:path ismap:creator_name ;
+    sh:name "creator_name" ;
+    skos:prefLabel "creator_name"@en ;
+    skos:definition "Name of the person or organisation responsible for creating or maintaining the dataset metadata."@en ;
+    skos:scopeNote "Global attribute. Recommended. Omit if unknown; do not use an empty string or 'N/A'."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'creator_name' is recommended and, when provided, must be a non-empty string."@en .
+
+ismap:creator_email
+    a sh:PropertyShape ;
+    sh:path ismap:creator_email ;
+    sh:name "creator_email" ;
+    skos:prefLabel "creator_email"@en ;
+    skos:definition "Email address of the person or organisation responsible for creating or maintaining the dataset metadata."@en ;
+    skos:scopeNote "Global attribute. Recommended. Omit if unknown; do not use an empty string or 'N/A'."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'creator_email' is recommended and should contain a valid email address."@en .
+
+ismap:metadata_profile
+    a sh:PropertyShape ;
+    sh:path ismap:metadata_profile ;
+    sh:name "metadata_profile" ;
+    skos:prefLabel "metadata_profile"@en ;
+    skos:definition "Persistent URI identifying the metadata application profile followed by the dataset."@en ;
+    skos:scopeNote "Global attribute. Mandatory. The value should point to the canonical profile or to the exact versioned profile document."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "The global attribute 'metadata_profile' must contain a resolvable HTTP or HTTPS URI."@en .
+
+ismap:metadata_profile_version
+    a sh:PropertyShape ;
+    sh:path ismap:metadata_profile_version ;
+    sh:name "metadata_profile_version" ;
+    skos:prefLabel "metadata_profile_version"@en ;
+    skos:definition "Version of the metadata application profile used to describe the dataset."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Versioning follows MAJOR.MINOR.PATCH; suffixes such as '-draft' may be used before the first stable release."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" ;
+    sh:message "The global attribute 'metadata_profile_version' must follow MAJOR.MINOR.PATCH, optionally followed by a suffix such as '-draft'."@en .
+
+ismap:Conventions
+    a sh:PropertyShape ;
+    sh:path ismap:Conventions ;
+    sh:name "Conventions" ;
+    skos:prefLabel "Conventions"@en ;
+    skos:definition "Comma-separated list of metadata and data conventions followed by the dataset."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Should include CF, ACDD and this metadata application profile."@en ;
+    dct:conformsTo <https://cfconventions.org/> , <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "The global attribute 'Conventions' must be present and must list the conventions followed by the dataset."@en .
+
+ismap:keywords
+    a sh:PropertyShape ;
+    sh:path ismap:keywords ;
+    sh:name "keywords" ;
+    skos:prefLabel "keywords"@en ;
+    skos:definition "Comma-separated list of terms that support discovery of the dataset."@en ;
+    skos:scopeNote "Global attribute. Recommended. Use controlled vocabularies where possible. Omit if no meaningful keyword is available."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'keywords' is recommended and should be a non-empty comma-separated string."@en .
+
+ismap:license
+    a sh:PropertyShape ;
+    sh:path ismap:license ;
+    sh:name "license" ;
+    skos:prefLabel "license"@en ;
+    skos:definition "Statement describing the licence or usage conditions that apply to the dataset."@en ;
+    skos:scopeNote "Global attribute. Recommended. Prefer a persistent URI identifying a standard licence, where possible."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'license' is recommended and should describe the usage conditions of the dataset."@en .
+
+ismap:sourceUrl
+    a sh:PropertyShape ;
+    sh:path ismap:sourceUrl ;
+    sh:name "sourceUrl" ;
+    skos:prefLabel "sourceUrl"@en ;
+    skos:definition "URL of the source data or source service from which the dataset is derived or harvested."@en ;
+    skos:scopeNote "Global attribute. Optional. If provided, use an HTTP or HTTPS URL when applicable."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "The global attribute 'sourceUrl', when provided, should contain an HTTP or HTTPS URL."@en .
+
+ismap:infoUrl
+    a sh:PropertyShape ;
+    sh:path ismap:infoUrl ;
+    sh:name "infoUrl" ;
+    skos:prefLabel "infoUrl"@en ;
+    skos:definition "URL of a human-readable information page about the dataset, project or data provider."@en ;
+    skos:scopeNote "Global attribute. Optional. If provided, use an HTTP or HTTPS URL when applicable."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "The global attribute 'infoUrl', when provided, should contain an HTTP or HTTPS URL."@en .
+
+ismap:time_coverage_start
+    a sh:PropertyShape ;
+    sh:path ismap:time_coverage_start ;
+    sh:name "time_coverage_start" ;
+    skos:prefLabel "time_coverage_start"@en ;
+    skos:definition "Start date/time of the temporal coverage of the dataset."@en ;
+    skos:scopeNote "Global attribute. Recommended when the dataset has temporal coverage. Use ISO 8601 date/time notation."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'time_coverage_start' is recommended for temporal datasets and should use ISO 8601 notation."@en .
+
+ismap:time_coverage_end
+    a sh:PropertyShape ;
+    sh:path ismap:time_coverage_end ;
+    sh:name "time_coverage_end" ;
+    skos:prefLabel "time_coverage_end"@en ;
+    skos:definition "End date/time of the temporal coverage of the dataset."@en ;
+    skos:scopeNote "Global attribute. Recommended when the dataset has temporal coverage. Use ISO 8601 date/time notation. Omit for ongoing datasets if an end time is not available."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'time_coverage_end' is recommended for temporal datasets and should use ISO 8601 notation."@en .
+
+ismap:geospatial_lat_min
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lat_min ;
+    sh:name "geospatial_lat_min" ;
+    skos:prefLabel "geospatial_lat_min"@en ;
+    skos:definition "Southernmost latitude of the dataset spatial coverage."@en ;
+    skos:scopeNote "Global attribute. Recommended for geospatial datasets. Decimal degrees north. Valid range: -90 to 90."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minInclusive -90 ;
+    sh:maxInclusive 90 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'geospatial_lat_min' should be a decimal latitude between -90 and 90."@en .
+
+ismap:geospatial_lat_max
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lat_max ;
+    sh:name "geospatial_lat_max" ;
+    skos:prefLabel "geospatial_lat_max"@en ;
+    skos:definition "Northernmost latitude of the dataset spatial coverage."@en ;
+    skos:scopeNote "Global attribute. Recommended for geospatial datasets. Decimal degrees north. Valid range: -90 to 90."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minInclusive -90 ;
+    sh:maxInclusive 90 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'geospatial_lat_max' should be a decimal latitude between -90 and 90."@en .
+
+ismap:geospatial_lon_min
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lon_min ;
+    sh:name "geospatial_lon_min" ;
+    skos:prefLabel "geospatial_lon_min"@en ;
+    skos:definition "Westernmost longitude of the dataset spatial coverage."@en ;
+    skos:scopeNote "Global attribute. Recommended for geospatial datasets. Decimal degrees east. Valid range: -180 to 180."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minInclusive -180 ;
+    sh:maxInclusive 180 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'geospatial_lon_min' should be a decimal longitude between -180 and 180."@en .
+
+ismap:geospatial_lon_max
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lon_max ;
+    sh:name "geospatial_lon_max" ;
+    skos:prefLabel "geospatial_lon_max"@en ;
+    skos:definition "Easternmost longitude of the dataset spatial coverage."@en ;
+    skos:scopeNote "Global attribute. Recommended for geospatial datasets. Decimal degrees east. Valid range: -180 to 180."@en ;
+    dct:conformsTo <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minInclusive -180 ;
+    sh:maxInclusive 180 ;
+    sh:severity sh:Warning ;
+    sh:message "The global attribute 'geospatial_lon_max' should be a decimal longitude between -180 and 180."@en .
+
+#################################################################
+# Variable attributes
+#################################################################
+
+ismap:long_name
+    a sh:PropertyShape ;
+    sh:path ismap:long_name ;
+    sh:name "long_name" ;
+    skos:prefLabel "long_name"@en ;
+    skos:definition "A descriptive name for a variable, intended to be readable by humans."@en ;
+    skos:scopeNote "Variable attribute. Recommended. Use a clear phrase; do not use an empty string."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The variable attribute 'long_name' is recommended and should be a non-empty string."@en .
+
+ismap:standard_name
+    a sh:PropertyShape ;
+    sh:path ismap:standard_name ;
+    sh:name "standard_name" ;
+    skos:prefLabel "standard_name"@en ;
+    skos:definition "Canonical name identifying the physical quantity represented by a variable."@en ;
+    skos:scopeNote "Variable attribute. Recommended when the measured quantity has a corresponding CF standard name."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The variable attribute 'standard_name' is recommended when a CF standard name exists."@en .
+
+ismap:units
+    a sh:PropertyShape ;
+    sh:path ismap:units ;
+    sh:name "units" ;
+    skos:prefLabel "units"@en ;
+    skos:definition "Units of measurement for the variable value."@en ;
+    skos:scopeNote "Variable attribute. Recommended for physical quantities. Use units compatible with CF/UDUNITS where applicable. Omit for dimensionless or categorical variables when not meaningful."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The variable attribute 'units' is recommended for physical quantities and should be a non-empty string."@en .
+
+ismap:ioos_category
+    a sh:PropertyShape ;
+    sh:path ismap:ioos_category ;
+    sh:name "ioos_category" ;
+    skos:prefLabel "ioos_category"@en ;
+    skos:definition "High-level category used by ERDDAP and related discovery interfaces to group variables."@en ;
+    skos:scopeNote "Variable attribute. Optional or recommended depending on the publication target. Use a controlled value when the target service requires it."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:severity sh:Warning ;
+    sh:message "The variable attribute 'ioos_category', when provided, should be a non-empty string."@en .
+
+ismap:FillValue
+    a sh:PropertyShape ;
+    sh:path ismap:FillValue ;
+    sh:name "_FillValue" ;
+    skos:prefLabel "_FillValue"@en ;
+    skos:definition "Value used to represent missing or undefined data values for a variable."@en ;
+    skos:scopeNote "Variable attribute. Conditional. For numeric variables, the value should have the same datatype as the variable. It should not be used as a valid measured value. Detailed validation is delegated to implementation-specific validators."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
+    sh:maxCount 1 ;
+    sh:message "The variable attribute '_FillValue' should follow the netCDF/CF convention and have the same datatype as the variable."@en .
+
+ismap:missing_value
+    a sh:PropertyShape ;
+    sh:path ismap:missing_value ;
+    sh:name "missing_value" ;
+    skos:prefLabel "missing_value"@en ;
+    skos:definition "Value or values used to indicate missing data."@en ;
+    skos:scopeNote "Variable attribute. Optional. Prefer '_FillValue' where appropriate. If used, values should be consistent with the variable datatype. Detailed validation is delegated to implementation-specific validators."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
+    sh:message "The variable attribute 'missing_value', when used, should be consistent with the variable datatype."@en .
