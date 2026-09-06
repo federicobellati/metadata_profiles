@@ -10,10 +10,6 @@
 # ISMAR Dataset Metadata Application Profile
 # Version: 1.0.0-draft
 # Format: RDF/Turtle + SHACL
-#
-# NOTE
-# Replace the base namespace https://example.org/profiles/ismar-dataset-metadata/1.0.0#
-# with the final persistent URI chosen for the profile.
 #################################################################
 
 #################################################################
