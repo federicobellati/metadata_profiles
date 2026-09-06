@@ -1,4 +1,4 @@
-@prefix ismap: <https://example.org/profiles/ismar-dataset-metadata/1.0.0#> .
+@prefix ismap: <https://w3id.org/cnr-ismar/metadata_profiles/ismar-ve/insitu/1.0.0#> .
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix dct:   <http://purl.org/dc/terms/> .
