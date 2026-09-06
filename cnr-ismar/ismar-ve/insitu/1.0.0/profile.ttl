@@ -22,7 +22,7 @@ ismap:profile
     dct:description "A compact metadata application profile for datasets exposed through ERDDAP, THREDDS, CKAN and similar data/metadata services. Each metadata field is described directly as a SHACL property shape, using existing vocabularies only."@en ;
     dct:creator "CNR-ISMAR" ;
     dct:issued "2026-06-21"^^xsd:date ;
-    dct:modified "2026-06-21"^^xsd:date ;
+    dct:modified "2026-09-06"^^xsd:date ;
     dct:version "1.0.0-draft" ;
     dct:license <https://creativecommons.org/licenses/by/4.0/> ;
     prof:isProfileOf
