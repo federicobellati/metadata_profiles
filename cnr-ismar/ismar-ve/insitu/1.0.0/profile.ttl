@@ -18,7 +18,7 @@
 
 ismap:profile
     a prof:Profile ;
-    dct:title "ISMAR Dataset Metadata Application Profile"@en ;
+    dct:title "ISMAR Dataset Metadata Application Profile for InSitu instruments"@en ;
     dct:description "A compact metadata application profile for datasets exposed through ERDDAP, THREDDS, CKAN and similar data/metadata services. Each metadata field is described directly as a SHACL property shape, using existing vocabularies only."@en ;
     dct:creator "CNR-ISMAR" ;
     dct:issued "2026-06-21"^^xsd:date ;
@@ -36,14 +36,10 @@ ismap:profile
 # Main dataset-level shape
 #################################################################
 
-#################################################################
-# Main dataset-level shape
-#################################################################
-
 ismap:DatasetShape
     a sh:NodeShape ;
-    sh:name "ISMAR dataset metadata shape"@en ;
-    sh:description "Shape collecting the global metadata fields required or recommended by the ISMAR Dataset Metadata Application Profile."@en ;
+    sh:name "ISMAR dataset global metadata shape"@en ;
+    sh:description "Shape collecting the global metadata fields required or recommended by the ISMAR Dataset Metadata Application Profile for InSitu instruments."@en ;
     sh:property
         ismap:acknowledgement ,
         ismap:cdm_data_type ,
@@ -120,9 +116,6 @@ ismap:DatasetShape
         ismap:ri_start_date ,
         ismap:ri_geographical_coverage ,
         ismap:ri_abstract ,
-        ismap:ship_call_sign ,
-        ismap:ship_imo ,
-        ismap:ship_name ,
         ismap:source ,
         ismap:standard_name_vocabulary ,
         ismap:summary ,
