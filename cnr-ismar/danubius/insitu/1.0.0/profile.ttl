@@ -131,6 +131,11 @@ ismap:DatasetShape
         ismap:metadata_profile ,
         ismap:metadata_profile_version ,
         ismap:Conventions ,
+        ismap:geospatial_lat_resolution ,
+        ismap:geospatial_lon_resolution ,
+        ismap:ship_call_sign ,
+        ismap:ship_imo ,
+        ismap:ship_name ,
         ismap:sourceUrl .
 
 #################################################################
@@ -528,3 +533,1272 @@ ismap:missing_value
     skos:scopeNote "Variable attribute. Optional. Prefer '_FillValue' where appropriate. If used, values should be consistent with the variable datatype. Detailed validation is delegated to implementation-specific validators."@en ;
     dct:conformsTo <https://cfconventions.org/> ;
     sh:message "The variable attribute 'missing_value', when used, should be consistent with the variable datatype."@en .
+#################################################################
+# Quality-control variable-level shape
+#################################################################
+ismap:VariableQCShape
+    a sh:NodeShape ;
+    sh:name "ISMAR quality-control variable metadata shape"@en ;
+    sh:description "Optional metadata fields describing a quality-control flag variable."@en ;
+    sh:property
+        ismap:standard_name ,
+        ismap:long_name ,
+        ismap:flag_meanings ,
+        ismap:flag_values ,
+        ismap:qc_manual ,
+        ismap:qc_method .
+
+#################################################################
+# Optional property shapes integrated from IT-IOOS notes
+#################################################################
+ismap:acknowledgement
+    a sh:PropertyShape ;
+    sh:path ismap:acknowledgement ;
+    sh:name "acknowledgement" ;
+    skos:prefLabel "acknowledgement"@en ;
+    skos:definition "A place to acknowledge various types of support for the project that produced this data"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'acknowledgement' has an invalid value or cardinality."@en .
+
+ismap:cdm_data_type
+    a sh:PropertyShape ;
+    sh:path ismap:cdm_data_type ;
+    sh:name "cdm_data_type" ;
+    skos:prefLabel "cdm_data_type"@en ;
+    skos:definition "Data type according to Common Data Model (possbile values: Grid, MovingGrid, Other, Point, Profile, RadialSweep, TimeSeries, TimeSeriesProfile, Swath, Trajectory, TrajectoryProfile)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NCEI NetCDF Templates v2.0."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "Grid" "MovingGrid" "Other" "Point" "Profile" "RadialSweep" "TimeSeries" "TimeSeriesProfile" "Swath" "Trajectory" "TrajectoryProfile" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'cdm_data_type' has an invalid value or cardinality."@en .
+
+ismap:contributors_name
+    a sh:PropertyShape ;
+    sh:path ismap:contributors_name ;
+    sh:name "contributors_name" ;
+    skos:prefLabel "contributors_name"@en ;
+    skos:definition "The name of any individuals, projects, or institutions that contributed to the creation of this data. May be presented as free text, or in a structured format compatible with conversion to ncML (e.g., insensitive to changes in whitespace, including end-of-line characters)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'contributors_name' has an invalid value or cardinality."@en .
+
+ismap:contributors_orcid
+    a sh:PropertyShape ;
+    sh:path ismap:contributors_orcid ;
+    sh:name "contributors_orcid" ;
+    skos:prefLabel "contributors_orcid"@en ;
+    skos:definition "ORCID of any individuals or institutions that contributed to the collection of this data (separated by comma)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ORCID."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'contributors_orcid' has an invalid value or cardinality."@en .
+
+ismap:contributors_role
+    a sh:PropertyShape ;
+    sh:path ismap:contributors_role ;
+    sh:name "contributors_role" ;
+    skos:prefLabel "contributors_role"@en ;
+    skos:definition "The role of any individuals, projects, or institutions that contributed to the creation of this data. May be presented as free text, or in a structured format compatible with conversion to ncML (e.g., insensitive to changes in whitespace, including end-of-line characters). Multiple roles should be presented in the same order and number as the names in contributor_names"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'contributors_role' has an invalid value or cardinality."@en .
+
+ismap:conventions
+    a sh:PropertyShape ;
+    sh:path ismap:conventions ;
+    sh:name "conventions" ;
+    skos:prefLabel "conventions"@en ;
+    skos:definition "Conventions used to define dataset metadata"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'conventions' has an invalid value or cardinality."@en .
+
+ismap:coordinates_reference_system
+    a sh:PropertyShape ;
+    sh:path ismap:coordinates_reference_system ;
+    sh:name "coordinates_reference_system" ;
+    skos:prefLabel "coordinates_reference_system"@en ;
+    skos:definition "Coordinate reference system used to interpret the dataset spatial coordinates."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'coordinates_reference_system' has an invalid value or cardinality."@en .
+
+ismap:creator_type
+    a sh:PropertyShape ;
+    sh:path ismap:creator_type ;
+    sh:name "creator_type" ;
+    skos:prefLabel "creator_type"@en ;
+    skos:definition "Specifies type of creator with one of the following: 'person', 'group', 'institution', or 'position'. If this attribute is not specified, the creator is assumed to be a person"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "person" "group" "institution" "position" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'creator_type' has an invalid value or cardinality."@en .
+
+ismap:creator_url
+    a sh:PropertyShape ;
+    sh:path ismap:creator_url ;
+    sh:name "creator_url" ;
+    skos:prefLabel "creator_url"@en ;
+    skos:definition "The URL of the person (or other creator type specified by the creator_type attribute) principally responsible for creating this data"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'creator_url' has an invalid value or cardinality."@en .
+
+ismap:data_best_practices_doi
+    a sh:PropertyShape ;
+    sh:path ismap:data_best_practices_doi ;
+    sh:name "data_best_practices_doi" ;
+    skos:prefLabel "data_best_practices_doi"@en ;
+    skos:definition "Data best practices DOI"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with DOI."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'data_best_practices_doi' has an invalid value or cardinality."@en .
+
+ismap:data_creation
+    a sh:PropertyShape ;
+    sh:path ismap:data_creation ;
+    sh:name "data_creation" ;
+    skos:prefLabel "data_creation"@en ;
+    skos:definition "Date of dataset creation"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ISO 8601."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:message "Optional attribute 'data_creation' has an invalid value or cardinality."@en .
+
+ismap:data_dataset
+    a sh:PropertyShape ;
+    sh:path ismap:data_dataset ;
+    sh:name "data_dataset" ;
+    skos:prefLabel "data_dataset"@en ;
+    skos:definition "URL to ERDDAP data dataset (in case of collection for which there are 2 different dataset for data and metadata) - connected to metadata: metadata_dataset"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'data_dataset' has an invalid value or cardinality."@en .
+
+ismap:data_doi
+    a sh:PropertyShape ;
+    sh:path ismap:data_doi ;
+    sh:name "data_doi" ;
+    skos:prefLabel "data_doi"@en ;
+    skos:definition "Data DOI"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with DOI."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'data_doi' has an invalid value or cardinality."@en .
+
+ismap:data_format_original
+    a sh:PropertyShape ;
+    sh:path ismap:data_format_original ;
+    sh:name "data_format_original" ;
+    skos:prefLabel "data_format_original"@en ;
+    skos:definition "Original format of the dataset"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'data_format_original' has an invalid value or cardinality."@en .
+
+ismap:data_type
+    a sh:PropertyShape ;
+    sh:path ismap:data_type ;
+    sh:name "data_type" ;
+    skos:prefLabel "data_type"@en ;
+    skos:definition "NRT/DMT"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "NRT" "DMT" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'data_type' has an invalid value or cardinality."@en .
+
+ismap:data_update
+    a sh:PropertyShape ;
+    sh:path ismap:data_update ;
+    sh:name "data_update" ;
+    skos:prefLabel "data_update"@en ;
+    skos:definition "Date of dataset update"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ISO 8601."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:message "Optional attribute 'data_update' has an invalid value or cardinality."@en .
+
+ismap:data_update_frequence
+    a sh:PropertyShape ;
+    sh:path ismap:data_update_frequence ;
+    sh:name "data_update_frequence" ;
+    skos:prefLabel "data_update_frequence"@en ;
+    skos:definition "Frequence of dataset update"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "never" "daily" "weekly" "monthly" "yearly" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'data_update_frequence' has an invalid value or cardinality."@en .
+
+ismap:data_version
+    a sh:PropertyShape ;
+    sh:path ismap:data_version ;
+    sh:name "data_version" ;
+    skos:prefLabel "data_version"@en ;
+    skos:definition "Dataset update version"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'data_version' has an invalid value or cardinality."@en .
+
+ismap:distributor_name
+    a sh:PropertyShape ;
+    sh:path ismap:distributor_name ;
+    sh:name "distributor_name" ;
+    skos:prefLabel "distributor_name"@en ;
+    skos:definition "Name of the entity from which we are federating information"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'distributor_name' has an invalid value or cardinality."@en .
+
+ismap:distributor_url
+    a sh:PropertyShape ;
+    sh:path ismap:distributor_url ;
+    sh:name "distributor_url" ;
+    skos:prefLabel "distributor_url"@en ;
+    skos:definition "URL of the entity from which we are federating information"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'distributor_url' has an invalid value or cardinality."@en .
+
+ismap:geospatial_lat_resolution
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lat_resolution ;
+    sh:name "geospatial_lat_resolution" ;
+    skos:prefLabel "geospatial_lat_resolution"@en ;
+    skos:definition "Latitude resolution expressed in WGS84 (for grid data)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with WGS84."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minExclusive 0 ;
+    sh:message "Optional attribute 'geospatial_lat_resolution' has an invalid value or cardinality."@en .
+
+ismap:geospatial_lat_units
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lat_units ;
+    sh:name "geospatial_lat_units" ;
+    skos:prefLabel "geospatial_lat_units"@en ;
+    skos:definition "Degrees north"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'geospatial_lat_units' has an invalid value or cardinality."@en .
+
+ismap:geospatial_lon_resolution
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lon_resolution ;
+    sh:name "geospatial_lon_resolution" ;
+    skos:prefLabel "geospatial_lon_resolution"@en ;
+    skos:definition "Longitude resolution expressed in WGS84 (for grid data)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with WGS84."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:minExclusive 0 ;
+    sh:message "Optional attribute 'geospatial_lon_resolution' has an invalid value or cardinality."@en .
+
+ismap:geospatial_lon_units
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_lon_units ;
+    sh:name "geospatial_lon_units" ;
+    skos:prefLabel "geospatial_lon_units"@en ;
+    skos:definition "Degrees east"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'geospatial_lon_units' has an invalid value or cardinality."@en .
+
+ismap:geospatial_vertical_max
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_vertical_max ;
+    sh:name "geospatial_vertical_max" ;
+    skos:prefLabel "geospatial_vertical_max"@en ;
+    skos:definition "Max vertical extension (in case of vertical profile) (the highest possible precision)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:message "Optional attribute 'geospatial_vertical_max' has an invalid value or cardinality."@en .
+
+ismap:geospatial_vertical_min
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_vertical_min ;
+    sh:name "geospatial_vertical_min" ;
+    skos:prefLabel "geospatial_vertical_min"@en ;
+    skos:definition "Min vertical extension (in case of vertical profile) (the highest possible precision)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:decimal ;
+    sh:message "Optional attribute 'geospatial_vertical_min' has an invalid value or cardinality."@en .
+
+ismap:geospatial_vertical_positive
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_vertical_positive ;
+    sh:name "geospatial_vertical_positive" ;
+    skos:prefLabel "geospatial_vertical_positive"@en ;
+    skos:definition "Positive direction of vertical extension (\"up\" means that z increases up - height, \"down\" means that z increases downward - pressure or depth)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "up" "down" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'geospatial_vertical_positive' has an invalid value or cardinality."@en .
+
+ismap:geospatial_vertical_units
+    a sh:PropertyShape ;
+    sh:path ismap:geospatial_vertical_units ;
+    sh:name "geospatial_vertical_units" ;
+    skos:prefLabel "geospatial_vertical_units"@en ;
+    skos:definition "Units used for the vertical extension"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'geospatial_vertical_units' has an invalid value or cardinality."@en .
+
+ismap:inspire
+    a sh:PropertyShape ;
+    sh:path ismap:inspire ;
+    sh:name "inspire" ;
+    skos:prefLabel "inspire"@en ;
+    skos:definition "INSPIRE spatial data or SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with INSPIRE Spatial Data Themes (GEMET)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'inspire' has an invalid value or cardinality."@en .
+
+ismap:institution_edmo_code
+    a sh:PropertyShape ;
+    sh:path ismap:institution_edmo_code ;
+    sh:name "institution_edmo_code" ;
+    skos:prefLabel "institution_edmo_code"@en ;
+    skos:definition "EDMO code of the institution principally responsible for this data (owner or provider)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMO SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9]+$" ;
+    sh:message "Optional attribute 'institution_edmo_code' has an invalid value or cardinality."@en .
+
+ismap:institution_edmo_uri
+    a sh:PropertyShape ;
+    sh:path ismap:institution_edmo_uri ;
+    sh:name "institution_edmo_uri" ;
+    skos:prefLabel "institution_edmo_uri"@en ;
+    skos:definition "EDMO URI of the institution principally responsible for this data (owner or provider)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMO SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'institution_edmo_uri' has an invalid value or cardinality."@en .
+
+ismap:institution_ror_code
+    a sh:PropertyShape ;
+    sh:path ismap:institution_ror_code ;
+    sh:name "institution_ror_code" ;
+    skos:prefLabel "institution_ror_code"@en ;
+    skos:definition "ROR code of the institution principally responsible for this data (owner or provider)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ROR."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9a-z]{9}$" ;
+    sh:message "Optional attribute 'institution_ror_code' has an invalid value or cardinality."@en .
+
+ismap:institution_ror_uri
+    a sh:PropertyShape ;
+    sh:path ismap:institution_ror_uri ;
+    sh:name "institution_ror_uri" ;
+    skos:prefLabel "institution_ror_uri"@en ;
+    skos:definition "ROR URI of the institution principally responsible for this data (owner or provider)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ROR."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'institution_ror_uri' has an invalid value or cardinality."@en .
+
+ismap:keywords_vocabulary
+    a sh:PropertyShape ;
+    sh:path ismap:keywords_vocabulary ;
+    sh:name "keywords_vocabulary" ;
+    skos:prefLabel "keywords_vocabulary"@en ;
+    skos:definition "Identifies the controlled list of keywords from which the values in the \"keywords\" attribute are taken (in case of multiple vocabularies, separated by comma)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with Global Change Master Directory (GCMD)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'keywords_vocabulary' has an invalid value or cardinality."@en .
+
+ismap:metadata_dataset
+    a sh:PropertyShape ;
+    sh:path ismap:metadata_dataset ;
+    sh:name "metadata_dataset" ;
+    skos:prefLabel "metadata_dataset"@en ;
+    skos:definition "URL to ERDDAP metadata dataset (in case of collection for which there are 2 different dataset for data and metadata) - connected to metadata: data_dataset"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'metadata_dataset' has an invalid value or cardinality."@en .
+
+ismap:metadata_source
+    a sh:PropertyShape ;
+    sh:path ismap:metadata_source ;
+    sh:name "metadata_source" ;
+    skos:prefLabel "metadata_source"@en ;
+    skos:definition "URL to data source metadata"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'metadata_source' has an invalid value or cardinality."@en .
+
+ismap:naming_authority
+    a sh:PropertyShape ;
+    sh:path ismap:naming_authority ;
+    sh:name "naming_authority" ;
+    skos:prefLabel "naming_authority"@en ;
+    skos:definition "Name of who defines the data set and the standards to be applied"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'naming_authority' has an invalid value or cardinality."@en .
+
+ismap:oceanographic_campaign
+    a sh:PropertyShape ;
+    sh:path ismap:oceanographic_campaign ;
+    sh:name "oceanographic_campaign" ;
+    skos:prefLabel "oceanographic_campaign"@en ;
+    skos:definition "Name of the oceanographic campaign during which the data were collected"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'oceanographic_campaign' has an invalid value or cardinality."@en .
+
+ismap:platform_id_orig
+    a sh:PropertyShape ;
+    sh:path ismap:platform_id_orig ;
+    sh:name "platform_id_orig" ;
+    skos:prefLabel "platform_id_orig"@en ;
+    skos:definition "Pre-existing platform id, if applicable"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_id_orig' has an invalid value or cardinality."@en .
+
+ismap:platform_name
+    a sh:PropertyShape ;
+    sh:path ismap:platform_name ;
+    sh:name "platform_name" ;
+    skos:prefLabel "platform_name"@en ;
+    skos:definition "Human-readable name of the observation platform."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_name' has an invalid value or cardinality."@en .
+
+ismap:platform_organization_managing
+    a sh:PropertyShape ;
+    sh:path ismap:platform_organization_managing ;
+    sh:name "platform_organization_managing" ;
+    skos:prefLabel "platform_organization_managing"@en ;
+    skos:definition "Organization or institute managing the facility or observation platform"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_organization_managing' has an invalid value or cardinality."@en .
+
+ismap:platform_organization_owning
+    a sh:PropertyShape ;
+    sh:path ismap:platform_organization_owning ;
+    sh:name "platform_organization_owning" ;
+    skos:prefLabel "platform_organization_owning"@en ;
+    skos:definition "Organization owning the facility or observation platform"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_organization_owning' has an invalid value or cardinality."@en .
+
+ismap:platform_reference_person
+    a sh:PropertyShape ;
+    sh:path ismap:platform_reference_person ;
+    sh:name "platform_reference_person" ;
+    skos:prefLabel "platform_reference_person"@en ;
+    skos:definition "Facility or observation platform reference person"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_reference_person' has an invalid value or cardinality."@en .
+
+ismap:platform_type_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:platform_type_sdn_name ;
+    sh:name "platform_type_sdn_name" ;
+    skos:prefLabel "platform_type_sdn_name"@en ;
+    skos:definition "Name of the platform type according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'platform_type_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:platform_type_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:platform_type_sdn_uri ;
+    sh:name "platform_type_sdn_uri" ;
+    skos:prefLabel "platform_type_sdn_uri"@en ;
+    skos:definition "URI of the platform type according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'platform_type_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:platform_type_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:platform_type_sdn_urn ;
+    sh:name "platform_type_sdn_urn" ;
+    skos:prefLabel "platform_type_sdn_urn"@en ;
+    skos:definition "URN of the platform type according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'platform_type_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:platform_wmo
+    a sh:PropertyShape ;
+    sh:path ismap:platform_wmo ;
+    sh:name "platform_wmo" ;
+    skos:prefLabel "platform_wmo"@en ;
+    skos:definition "Platform identification numbers according to World Meteorological Organization"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with Buoy WMO Identification numbers."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9]+$" ;
+    sh:message "Optional attribute 'platform_wmo' has an invalid value or cardinality."@en .
+
+ismap:project_code
+    a sh:PropertyShape ;
+    sh:path ismap:project_code ;
+    sh:name "project_code" ;
+    skos:prefLabel "project_code"@en ;
+    skos:definition "Project code/acronym"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with CORDIS for European Project."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'project_code' has an invalid value or cardinality."@en .
+
+ismap:project_DOI
+    a sh:PropertyShape ;
+    sh:path ismap:project_DOI ;
+    sh:name "project_DOI" ;
+    skos:prefLabel "project_DOI"@en ;
+    skos:definition "Project DOI"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with CORDIS for European Project."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'project_DOI' has an invalid value or cardinality."@en .
+
+ismap:project_edmerp
+    a sh:PropertyShape ;
+    sh:path ismap:project_edmerp ;
+    sh:name "project_edmerp" ;
+    skos:prefLabel "project_edmerp"@en ;
+    skos:definition "Project EDMERP code"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMERP SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9]+$" ;
+    sh:message "Optional attribute 'project_edmerp' has an invalid value or cardinality."@en .
+
+ismap:project_edmerp_uri
+    a sh:PropertyShape ;
+    sh:path ismap:project_edmerp_uri ;
+    sh:name "project_edmerp_uri" ;
+    skos:prefLabel "project_edmerp_uri"@en ;
+    skos:definition "Project EDMERP uri"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMERP SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'project_edmerp_uri' has an invalid value or cardinality."@en .
+
+ismap:project_id
+    a sh:PropertyShape ;
+    sh:path ismap:project_id ;
+    sh:name "project_id" ;
+    skos:prefLabel "project_id"@en ;
+    skos:definition "Project Grant agreement number"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with CORDIS for European Project."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9]+$" ;
+    sh:message "Optional attribute 'project_id' has an invalid value or cardinality."@en .
+
+ismap:project_name
+    a sh:PropertyShape ;
+    sh:path ismap:project_name ;
+    sh:name "project_name" ;
+    skos:prefLabel "project_name"@en ;
+    skos:definition "Project name"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with CORDIS for European Project."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'project_name' has an invalid value or cardinality."@en .
+
+ismap:project_statement
+    a sh:PropertyShape ;
+    sh:path ismap:project_statement ;
+    sh:name "project_statement" ;
+    skos:prefLabel "project_statement"@en ;
+    skos:definition "Project Grant agreement statement"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with CORDIS for European Project."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'project_statement' has an invalid value or cardinality."@en .
+
+ismap:publisher_name
+    a sh:PropertyShape ;
+    sh:path ismap:publisher_name ;
+    sh:name "publisher_name" ;
+    skos:prefLabel "publisher_name"@en ;
+    skos:definition "The name of the person (or other entity specified by the publisher_type attribute) responsible for publishing the data file or product to users, with its current metadata and format."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'publisher_name' has an invalid value or cardinality."@en .
+
+ismap:publisher_type
+    a sh:PropertyShape ;
+    sh:path ismap:publisher_type ;
+    sh:name "publisher_type" ;
+    skos:prefLabel "publisher_type"@en ;
+    skos:definition "Specifies type of publisher with one of the following: 'person', 'group', 'institution', or 'position'. If this attribute is not specified, the publisher is assumed to be a person."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:in ( "person" "group" "institution" "position" ) ;
+    sh:datatype xsd:string ;
+    sh:message "Optional attribute 'publisher_type' has an invalid value or cardinality."@en .
+
+ismap:publisher_url
+    a sh:PropertyShape ;
+    sh:path ismap:publisher_url ;
+    sh:name "publisher_url" ;
+    skos:prefLabel "publisher_url"@en ;
+    skos:definition "The URL of the person (or other entity specified by the publisher_type attribute) responsible for publishing the data file or product to users, with its current metadata and format."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'publisher_url' has an invalid value or cardinality."@en .
+
+ismap:references
+    a sh:PropertyShape ;
+    sh:path ismap:references ;
+    sh:name "references" ;
+    skos:prefLabel "references"@en ;
+    skos:definition "Description of how the dataset was created: published or web-based references that describe the data or methods used to produce it. Recommend URIs (such as a URL or DOI) for papers or other references. This attribute is defined in the CF conventions."@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'references' has an invalid value or cardinality."@en .
+
+ismap:ri_name
+    a sh:PropertyShape ;
+    sh:path ismap:ri_name ;
+    sh:name "ri_name" ;
+    skos:prefLabel "ri_name"@en ;
+    skos:definition "Name of the Subsystem or Research Infrastructure"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_name' has an invalid value or cardinality."@en .
+
+ismap:ri_short_name
+    a sh:PropertyShape ;
+    sh:path ismap:ri_short_name ;
+    sh:name "ri_short_name" ;
+    skos:prefLabel "ri_short_name"@en ;
+    skos:definition "RI's Acronym"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_short_name' has an invalid value or cardinality."@en .
+
+ismap:ri_national_coordin_organization
+    a sh:PropertyShape ;
+    sh:path ismap:ri_national_coordin_organization ;
+    sh:name "ri_national_coordin_organization" ;
+    skos:prefLabel "ri_national_coordin_organization"@en ;
+    skos:definition "National Coordinating institute"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_national_coordin_organization' has an invalid value or cardinality."@en .
+
+ismap:ri_national_coordin_organization_edmo_code
+    a sh:PropertyShape ;
+    sh:path ismap:ri_national_coordin_organization_edmo_code ;
+    sh:name "ri_national_coordin_organization_edmo_code" ;
+    skos:prefLabel "ri_national_coordin_organization_edmo_code"@en ;
+    skos:definition "National Coordinating institute EDMO code"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMO SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_national_coordin_organization_edmo_code' has an invalid value or cardinality."@en .
+
+ismap:ri_national_coordin_organization_edmo_uri
+    a sh:PropertyShape ;
+    sh:path ismap:ri_national_coordin_organization_edmo_uri ;
+    sh:name "ri_national_coordin_organization_edmo_uri" ;
+    skos:prefLabel "ri_national_coordin_organization_edmo_uri"@en ;
+    skos:definition "National Coordinating institute EDMO uri"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with EDMO SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'ri_national_coordin_organization_edmo_uri' has an invalid value or cardinality."@en .
+
+ismap:ri_national_coordinating_person
+    a sh:PropertyShape ;
+    sh:path ismap:ri_national_coordinating_person ;
+    sh:name "ri_national_coordinating_person" ;
+    skos:prefLabel "ri_national_coordinating_person"@en ;
+    skos:definition "National Principal Investigator (Name/Names, free text)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_national_coordinating_person' has an invalid value or cardinality."@en .
+
+ismap:ri_start_date
+    a sh:PropertyShape ;
+    sh:path ismap:ri_start_date ;
+    sh:name "ri_start_date" ;
+    skos:prefLabel "ri_start_date"@en ;
+    skos:definition "Program Start date"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:message "Optional attribute 'ri_start_date' has an invalid value or cardinality."@en .
+
+ismap:ri_geographical_coverage
+    a sh:PropertyShape ;
+    sh:path ismap:ri_geographical_coverage ;
+    sh:name "ri_geographical_coverage" ;
+    skos:prefLabel "ri_geographical_coverage"@en ;
+    skos:definition "Sea-areas and fresh water bodies"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with SEA AREAS and FRESH WATRE BODIES SeaDataNet."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_geographical_coverage' has an invalid value or cardinality."@en .
+
+ismap:ri_abstract
+    a sh:PropertyShape ;
+    sh:path ismap:ri_abstract ;
+    sh:name "ri_abstract" ;
+    skos:prefLabel "ri_abstract"@en ;
+    skos:definition "Abstract"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ri_abstract' has an invalid value or cardinality."@en .
+
+ismap:ship_call_sign
+    a sh:PropertyShape ;
+    sh:path ismap:ship_call_sign ;
+    sh:name "ship_call_sign" ;
+    skos:prefLabel "ship_call_sign"@en ;
+    skos:definition "Maritime call sign assigned as unique alphanumeric identifier to the ship"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ship_call_sign' has an invalid value or cardinality."@en .
+
+ismap:ship_imo
+    a sh:PropertyShape ;
+    sh:path ismap:ship_imo ;
+    sh:name "ship_imo" ;
+    skos:prefLabel "ship_imo"@en ;
+    skos:definition "IMO ship identification number (unique ship identifier) - report only the seven-digit number"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with Marine Traffic Research."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:pattern "^[0-9]{7}$" ;
+    sh:message "Optional attribute 'ship_imo' has an invalid value or cardinality."@en .
+
+ismap:ship_name
+    a sh:PropertyShape ;
+    sh:path ismap:ship_name ;
+    sh:name "ship_name" ;
+    skos:prefLabel "ship_name"@en ;
+    skos:definition "Name of the ship"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ship_name' has an invalid value or cardinality."@en .
+
+ismap:source
+    a sh:PropertyShape ;
+    sh:path ismap:source ;
+    sh:name "source" ;
+    skos:prefLabel "source"@en ;
+    skos:definition "The method of collection and production of the dataset (e.g., types of instrument, model, collection). If it was model-generated, source should name the model and its version. If it is observational, source should characterize it. This attribute is defined in the CF Conventions"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'source' has an invalid value or cardinality."@en .
+
+ismap:standard_name_vocabulary
+    a sh:PropertyShape ;
+    sh:path ismap:standard_name_vocabulary ;
+    sh:name "standard_name_vocabulary" ;
+    skos:prefLabel "standard_name_vocabulary"@en ;
+    skos:definition "Name and version of standard vocabulary (e.g., CF Standard Name Table v70)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'standard_name_vocabulary' has an invalid value or cardinality."@en .
+
+ismap:time_coverage_duration
+    a sh:PropertyShape ;
+    sh:path ismap:time_coverage_duration ;
+    sh:name "time_coverage_duration" ;
+    skos:prefLabel "time_coverage_duration"@en ;
+    skos:definition "Time coverage duration using ISO 8601 (in alternative to time_coverage_start/time_coverage_end)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ISO 8601."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^P(?!$).+" ;
+    sh:message "Optional attribute 'time_coverage_duration' has an invalid value or cardinality."@en .
+
+ismap:time_coverage_resolution
+    a sh:PropertyShape ;
+    sh:path ismap:time_coverage_resolution ;
+    sh:name "time_coverage_resolution" ;
+    skos:prefLabel "time_coverage_resolution"@en ;
+    skos:definition "Time coverage resolution using ISO 8601 (if applicable)"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ISO 8601."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^P(?!$).+" ;
+    sh:message "Optional attribute 'time_coverage_resolution' has an invalid value or cardinality."@en .
+
+ismap:license_uri
+    a sh:PropertyShape ;
+    sh:path ismap:license_uri ;
+    sh:name "license_uri" ;
+    skos:prefLabel "license_uri"@en ;
+    skos:definition "Link to license url"@en ;
+    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'license_uri' has an invalid value or cardinality."@en .
+
+ismap:parameter_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:parameter_sdn_name ;
+    sh:name "parameter_sdn_name" ;
+    skos:prefLabel "parameter_sdn_name"@en ;
+    skos:definition "Name of the parameter according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P01."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'parameter_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:ebv
+    a sh:PropertyShape ;
+    sh:path ismap:ebv ;
+    sh:name "ebv" ;
+    skos:prefLabel "ebv"@en ;
+    skos:definition "Essential Biodiversity Variable associated with the variable, when applicable."@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with GEOBON Essential Biodiversity Variables."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ebv' has an invalid value or cardinality."@en .
+
+ismap:ebv_uri
+    a sh:PropertyShape ;
+    sh:path ismap:ebv_uri ;
+    sh:name "ebv_uri" ;
+    skos:prefLabel "ebv_uri"@en ;
+    skos:definition "Optional variable metadata attribute for ebv uri."@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with GEOBON Essential Biodiversity Variables."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'ebv_uri' has an invalid value or cardinality."@en .
+
+ismap:ecv
+    a sh:PropertyShape ;
+    sh:path ismap:ecv ;
+    sh:name "ecv" ;
+    skos:prefLabel "ecv"@en ;
+    skos:definition "Essential Climate Variable (ECV): physical, chemical or biological variable or a group of linked variables that critically contributes to the characterization of Earth’s climate"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with GOOS Essential Climate Variables."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'ecv' has an invalid value or cardinality."@en .
+
+ismap:ecv_uri
+    a sh:PropertyShape ;
+    sh:path ismap:ecv_uri ;
+    sh:name "ecv_uri" ;
+    skos:prefLabel "ecv_uri"@en ;
+    skos:definition "URI to the Essential Climate Variable (ECV)"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with GOOS Essential Climate Variables."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'ecv_uri' has an invalid value or cardinality."@en .
+
+ismap:discipline
+    a sh:PropertyShape ;
+    sh:path ismap:discipline ;
+    sh:name "discipline" ;
+    skos:prefLabel "discipline"@en ;
+    skos:definition "Scientific discipline associated with the variable, preferably from the SeaDataNet P08 vocabulary."@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P08."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'discipline' has an invalid value or cardinality."@en .
+
+ismap:device_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:device_sdn_name ;
+    sh:name "device_sdn_name" ;
+    skos:prefLabel "device_sdn_name"@en ;
+    skos:definition "Name of the device according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L05."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'device_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:device_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:device_sdn_uri ;
+    sh:name "device_sdn_uri" ;
+    skos:prefLabel "device_sdn_uri"@en ;
+    skos:definition "URI of the device according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L05."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'device_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:device_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:device_sdn_urn ;
+    sh:name "device_sdn_urn" ;
+    skos:prefLabel "device_sdn_urn"@en ;
+    skos:definition "URN of the device according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L05."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'device_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:parameter_group
+    a sh:PropertyShape ;
+    sh:path ismap:parameter_group ;
+    sh:name "parameter_group" ;
+    skos:prefLabel "parameter_group"@en ;
+    skos:definition "Broader parameter group associated with the variable, preferably from the SeaDataNet P03 vocabulary."@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P03."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'parameter_group' has an invalid value or cardinality."@en .
+
+ismap:parameter_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:parameter_sdn_uri ;
+    sh:name "parameter_sdn_uri" ;
+    skos:prefLabel "parameter_sdn_uri"@en ;
+    skos:definition "URI of the parameter according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P01."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'parameter_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:parameter_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:parameter_sdn_urn ;
+    sh:name "parameter_sdn_urn" ;
+    skos:prefLabel "parameter_sdn_urn"@en ;
+    skos:definition "URN of the parameter according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P01."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'parameter_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:sensor_accuracy
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_accuracy ;
+    sh:name "sensor_accuracy" ;
+    skos:prefLabel "sensor_accuracy"@en ;
+    skos:definition "Accuracy of the sensor"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'sensor_accuracy' has an invalid value or cardinality."@en .
+
+ismap:sensor_last_calibration
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_last_calibration ;
+    sh:name "sensor_last_calibration" ;
+    skos:prefLabel "sensor_last_calibration"@en ;
+    skos:definition "Date of the last calibration of the sensor"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with ISO 8601."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}([T ][0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?)?$" ;
+    sh:message "Optional attribute 'sensor_last_calibration' has an invalid value or cardinality."@en .
+
+ismap:sensor_manufacturer_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_manufacturer_sdn_name ;
+    sh:name "sensor_manufacturer_sdn_name" ;
+    skos:prefLabel "sensor_manufacturer_sdn_name"@en ;
+    skos:definition "Name of the sensor manufacturer or developer according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L35."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'sensor_manufacturer_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:sensor_manufacturer_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_manufacturer_sdn_uri ;
+    sh:name "sensor_manufacturer_sdn_uri" ;
+    skos:prefLabel "sensor_manufacturer_sdn_uri"@en ;
+    skos:definition "URI of the sensor manufacturer or developer according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L35."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'sensor_manufacturer_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:sensor_manufacturer_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_manufacturer_sdn_urn ;
+    sh:name "sensor_manufacturer_sdn_urn" ;
+    skos:prefLabel "sensor_manufacturer_sdn_urn"@en ;
+    skos:definition "URN of the sensor manufacturer or developer according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L35."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'sensor_manufacturer_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:sensor_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_sdn_name ;
+    sh:name "sensor_sdn_name" ;
+    skos:prefLabel "sensor_sdn_name"@en ;
+    skos:definition "Name of the sensor according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L22 (in case of ARGO: NERC Vocabulary R25)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'sensor_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:sensor_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_sdn_uri ;
+    sh:name "sensor_sdn_uri" ;
+    skos:prefLabel "sensor_sdn_uri"@en ;
+    skos:definition "URI of the sensor according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L22 (in case of ARGO: NERC Vocabulary R25)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'sensor_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:sensor_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:sensor_sdn_urn ;
+    sh:name "sensor_sdn_urn" ;
+    skos:prefLabel "sensor_sdn_urn"@en ;
+    skos:definition "URN of the sensor according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary L22 (in case of ARGO: NERC Vocabulary R25)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'sensor_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:unit_sdn_name
+    a sh:PropertyShape ;
+    sh:path ismap:unit_sdn_name ;
+    sh:name "unit_sdn_name" ;
+    skos:prefLabel "unit_sdn_name"@en ;
+    skos:definition "Name of the unit of measurement according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'unit_sdn_name' has an invalid value or cardinality."@en .
+
+ismap:unit_sdn_uri
+    a sh:PropertyShape ;
+    sh:path ismap:unit_sdn_uri ;
+    sh:name "unit_sdn_uri" ;
+    skos:prefLabel "unit_sdn_uri"@en ;
+    skos:definition "URI of the unit of measurement according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'unit_sdn_uri' has an invalid value or cardinality."@en .
+
+ismap:unit_sdn_urn
+    a sh:PropertyShape ;
+    sh:path ismap:unit_sdn_urn ;
+    sh:name "unit_sdn_urn" ;
+    skos:prefLabel "unit_sdn_urn"@en ;
+    skos:definition "URN of the unit of measurement according to SeaDataNet vocabulary"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with NERC Vocabulary P06."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^SDN:[A-Za-z0-9]+::[A-Za-z0-9._-]+$" ;
+    sh:message "Optional attribute 'unit_sdn_urn' has an invalid value or cardinality."@en .
+
+ismap:units_url
+    a sh:PropertyShape ;
+    sh:path ismap:units_url ;
+    sh:name "units_url" ;
+    skos:prefLabel "units_url"@en ;
+    skos:definition "URL to the vocabulary used to define the unit of measurement of the variable in \"units\""@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with UDUNITS library of UniData (use one of the database in the chapter \"6 The Units Database\")."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'units_url' has an invalid value or cardinality."@en .
+
+ismap:variable_best_practices_doi
+    a sh:PropertyShape ;
+    sh:path ismap:variable_best_practices_doi ;
+    sh:name "variable_best_practices_doi" ;
+    skos:prefLabel "variable_best_practices_doi"@en ;
+    skos:definition "Varible best practices DOI (if the same of the data isert the same value of \"data_best_practice_doi\")"@en ;
+    skos:scopeNote "Variable attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with DOI."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'variable_best_practices_doi' has an invalid value or cardinality."@en .
+
+ismap:flag_meanings
+    a sh:PropertyShape ;
+    sh:path ismap:flag_meanings ;
+    sh:name "flag_meanings" ;
+    skos:prefLabel "flag_meanings"@en ;
+    skos:definition "One or more values separated by comma that indicate the meaning of the QC flags of the variable, there must be a match with the one entered in \"flag_values\" (fixed value: no_qc_performed, good_data, probably_good_data, bad_data_that_are_potentially_correctable, bad_data, value_changed, not_used, nominal_value, interpolated_value, missing_value)"@en ;
+    skos:scopeNote "Variable QC attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'flag_meanings' has an invalid value or cardinality."@en .
+
+ismap:flag_values
+    a sh:PropertyShape ;
+    sh:path ismap:flag_values ;
+    sh:name "flag_values" ;
+    skos:prefLabel "flag_values"@en ;
+    skos:definition "One or more values separated by comma that indicate the QC flags of the variable, there must be a match with the one entered in \"flag_meanings\" (possible values: 0,1,2,3,4,5,7,8,9)"@en ;
+    skos:scopeNote "Variable QC attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with OceanSITES Data Format Reference Manual (for ocean data)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'flag_values' has an invalid value or cardinality."@en .
+
+ismap:qc_manual
+    a sh:PropertyShape ;
+    sh:path ismap:qc_manual ;
+    sh:name "qc_manual" ;
+    skos:prefLabel "qc_manual"@en ;
+    skos:definition "Quality Flag Scheme"@en ;
+    skos:scopeNote "Variable QC attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with OceanSITES Data Format Reference Manual (for ocean data)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message "Optional attribute 'qc_manual' has an invalid value or cardinality."@en .
+
+ismap:qc_method
+    a sh:PropertyShape ;
+    sh:path ismap:qc_method ;
+    sh:name "qc_method" ;
+    skos:prefLabel "qc_method"@en ;
+    skos:definition "Quality Flag Method (DOI or other reference)"@en ;
+    skos:scopeNote "Variable QC attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value. Prefer values aligned with OceanSITES Data Format Reference Manual (for ocean data)."@en ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:anyURI ;
+    sh:pattern "^https?://" ;
+    sh:message "Optional attribute 'qc_method' has an invalid value or cardinality."@en .
