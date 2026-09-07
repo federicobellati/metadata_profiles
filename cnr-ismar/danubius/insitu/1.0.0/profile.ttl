@@ -41,6 +41,7 @@ ismap:DatasetShape
     sh:name "ISMAR dataset global metadata shape"@en ;
     sh:description "Shape collecting the global metadata fields required or recommended by the ISMAR Dataset Metadata Application Profile for InSitu instruments."@en ;
     sh:property
+        ismap:conformsTo ,
         ismap:acknowledgement ,
         ismap:cdm_data_type ,
         ismap:contributors_name ,
@@ -183,6 +184,19 @@ ismap:VariableShape
 #################################################################
 # Global attributes
 #################################################################
+
+ismap:conformsTo
+    a sh:PropertyShape ;
+    sh:path dct:conformsTo ;
+    sh:name "conformsTo" ;
+    skos:prefLabel "conformsTo"@en ;
+    skos:definition "Persistent URI identifying the metadata application profile used to create this metadata record."@en ;
+    skos:scopeNote "Global attribute. Mandatory. Must contain the canonical URI of the metadata profile this metadata record conforms to."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:hasValue <https://w3id.org/cnr-ismar/metadata_profiles/danubius/insitu/1.0.0> ;
+    sh:message "The metadata record must declare conformance to the ISMAR InSitu Metadata Application Profile."@en .
 
 ismap:title
     a sh:PropertyShape ;
