@@ -18,7 +18,7 @@
 
 ismap:profile
     a prof:Profile ;
-    dct:title "ISMAR Dataset Metadata Application Profile for InSitu instruments"@en ;
+    dct:title "DANUBIUS-ISMAR Dataset Metadata Application Profile for InSitu instruments"@en ;
     dct:description "A compact metadata application profile for datasets exposed through ERDDAP, THREDDS, CKAN and similar data/metadata services. Each metadata field is described directly as a SHACL property shape, using existing vocabularies only."@en ;
     dct:creator "CNR-ISMAR" ;
     dct:issued "2026-06-21"^^xsd:date ;
@@ -38,7 +38,7 @@ ismap:profile
 
 ismap:DatasetShape
     a sh:NodeShape ;
-    sh:name "ISMAR dataset global metadata shape"@en ;
+    sh:name "DANUBIUS-ISMAR dataset global metadata shape"@en ;
     sh:description "Shape collecting the global metadata fields required or recommended by the ISMAR Dataset Metadata Application Profile for InSitu instruments."@en ;
     sh:property
         ismap:conformsTo ,
@@ -144,7 +144,7 @@ ismap:DatasetShape
 
 ismap:VariableShape
     a sh:NodeShape ;
-    sh:name "ISMAR variable metadata shape"@en ;
+    sh:name "DANUBIUS-ISMAR variable metadata shape"@en ;
     sh:description "Shape collecting metadata fields intended to describe individual dataset variables."@en ;
     sh:property
         ismap:sourceName ,
@@ -185,6 +185,21 @@ ismap:VariableShape
         ismap:ioos_category ,
         ismap:FillValue ,
         ismap:missing_value .
+
+#################################################################
+# Quality-control variable-level shape
+#################################################################
+ismap:VariableQCShape
+    a sh:NodeShape ;
+    sh:name "ISMAR quality-control variable metadata shape"@en ;
+    sh:description "Optional metadata fields describing a quality-control flag variable."@en ;
+    sh:property
+        ismap:standard_name ,
+        ismap:long_name ,
+        ismap:flag_meanings ,
+        ismap:flag_values ,
+        ismap:qc_manual ,
+        ismap:qc_method .
 
 #################################################################
 # Global attributes
@@ -533,20 +548,6 @@ ismap:missing_value
     skos:scopeNote "Variable attribute. Optional. Prefer '_FillValue' where appropriate. If used, values should be consistent with the variable datatype. Detailed validation is delegated to implementation-specific validators."@en ;
     dct:conformsTo <https://cfconventions.org/> ;
     sh:message "The variable attribute 'missing_value', when used, should be consistent with the variable datatype."@en .
-#################################################################
-# Quality-control variable-level shape
-#################################################################
-ismap:VariableQCShape
-    a sh:NodeShape ;
-    sh:name "ISMAR quality-control variable metadata shape"@en ;
-    sh:description "Optional metadata fields describing a quality-control flag variable."@en ;
-    sh:property
-        ismap:standard_name ,
-        ismap:long_name ,
-        ismap:flag_meanings ,
-        ismap:flag_values ,
-        ismap:qc_manual ,
-        ismap:qc_method .
 
 #################################################################
 # Optional property shapes integrated from IT-IOOS notes
@@ -1754,6 +1755,11 @@ ismap:variable_best_practices_doi
     sh:datatype xsd:anyURI ;
     sh:pattern "^https?://" ;
     sh:message "Optional attribute 'variable_best_practices_doi' has an invalid value or cardinality."@en .
+
+
+#################################################################
+# QC Variable attributes
+#################################################################
 
 ismap:flag_meanings
     a sh:PropertyShape ;
