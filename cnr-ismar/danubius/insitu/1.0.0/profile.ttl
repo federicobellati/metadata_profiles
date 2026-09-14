@@ -201,6 +201,9 @@ ismap:VariableQCShape
         ismap:qc_manual ,
         ismap:qc_method .
 
+
+
+
 #################################################################
 # Global attributes
 #################################################################
@@ -246,6 +249,10 @@ ismap:summary
     sh:minLength 1 ;
     sh:message "The global attribute 'summary' is mandatory and must be a non-empty string."@en .
 
+#################################################################
+# --- V A L I D A T E D  ---
+#################################################################
+
 ismap:institution
     a sh:PropertyShape ;
     sh:path ismap:institution ;
@@ -288,31 +295,31 @@ ismap:creator_email
     sh:severity sh:Warning ;
     sh:message "The global attribute 'creator_email' is recommended and should contain a valid email address."@en .
 
-ismap:metadata_profile
-    a sh:PropertyShape ;
-    sh:path ismap:metadata_profile ;
-    sh:name "metadata_profile" ;
-    skos:prefLabel "metadata_profile"@en ;
-    skos:definition "Persistent URI identifying the metadata application profile followed by the dataset."@en ;
-    skos:scopeNote "Global attribute. Mandatory. The value should point to the canonical profile or to the exact versioned profile document."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:anyURI ;
-    sh:pattern "^https?://" ;
-    sh:message "The global attribute 'metadata_profile' must contain a resolvable HTTP or HTTPS URI."@en .
-
-ismap:metadata_profile_version
-    a sh:PropertyShape ;
-    sh:path ismap:metadata_profile_version ;
-    sh:name "metadata_profile_version" ;
-    skos:prefLabel "metadata_profile_version"@en ;
-    skos:definition "Version of the metadata application profile used to describe the dataset."@en ;
-    skos:scopeNote "Global attribute. Mandatory. Versioning follows MAJOR.MINOR.PATCH; suffixes such as '-draft' may be used before the first stable release."@en ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:string ;
-    sh:pattern "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" ;
-    sh:message "The global attribute 'metadata_profile_version' must follow MAJOR.MINOR.PATCH, optionally followed by a suffix such as '-draft'."@en .
+#ismap:metadata_profile
+#    a sh:PropertyShape ;
+#    sh:path ismap:metadata_profile ;
+#    sh:name "metadata_profile" ;
+#    skos:prefLabel "metadata_profile"@en ;
+#    skos:definition "Persistent URI identifying the metadata application profile followed by the dataset."@en ;
+#    skos:scopeNote "Global attribute. Mandatory. The value should point to the canonical profile or to the exact versioned profile document."@en ;
+#    sh:minCount 1 ;
+#    sh:maxCount 1 ;
+#    sh:datatype xsd:anyURI ;
+#    sh:pattern "^https?://" ;
+#    sh:message "The global attribute 'metadata_profile' must contain a resolvable HTTP or HTTPS URI."@en .
+#
+#ismap:metadata_profile_version
+#    a sh:PropertyShape ;
+#    sh:path ismap:metadata_profile_version ;
+#    sh:name "metadata_profile_version" ;
+#    skos:prefLabel "metadata_profile_version"@en ;
+#    skos:definition "Version of the metadata application profile used to describe the dataset."@en ;
+#    skos:scopeNote "Global attribute. Mandatory. Versioning follows MAJOR.MINOR.PATCH; suffixes such as '-draft' may be used before the first stable release."@en ;
+#    sh:minCount 1 ;
+#    sh:maxCount 1 ;
+#    sh:datatype xsd:string ;
+#    sh:pattern "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" ;
+#    sh:message "The global attribute 'metadata_profile_version' must follow MAJOR.MINOR.PATCH, optionally followed by a suffix such as '-draft'."@en .
 
 ismap:Conventions
     a sh:PropertyShape ;
