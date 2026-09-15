@@ -25,11 +25,11 @@ ismap:profile
     dct:modified "2026-09-06"^^xsd:date ;
     dct:version "1.0.0-draft" ;
     dct:license <https://creativecommons.org/licenses/by/4.0/> ;
-    prof:isProfileOf
-        <https://cfconventions.org/> ,
-        <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ,
-        <https://schema.datacite.org/> ,
-        <https://www.w3.org/TR/vocab-dcat-3/> ;
+    dct:references
+        <https://cfconventions.org/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html> ,
+        <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+    rdfs:seeAlso
+        <https://cfconventions.org/Data/cf-documents/requirements-recommendations/conformance-1.13.html> .
     rdfs:seeAlso ismap:DatasetShape .
 
 #################################################################
@@ -500,7 +500,12 @@ ismap:standard_name
     sh:name "standard_name" ;
     skos:prefLabel "standard_name"@en ;
     skos:definition "Canonical name identifying the physical quantity represented by a variable."@en ;
-    skos:scopeNote "Variable attribute. Recommended when the measured quantity has a corresponding CF standard name."@en ;
+    skos:scopeNote """
+        When supplied, the value must be a valid entry from the
+        CF Standard Name Table version declared by
+        standard_name_vocabulary. Validation against the table
+        is performed by an external CF-aware validator.
+    """@en ;
     dct:conformsTo <https://cfconventions.org/> ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
@@ -514,7 +519,12 @@ ismap:units
     sh:name "units" ;
     skos:prefLabel "units"@en ;
     skos:definition "Units of measurement for the variable value."@en ;
-    skos:scopeNote "Variable attribute. Recommended for physical quantities. Use units compatible with CF/UDUNITS where applicable. Omit for dimensionless or categorical variables when not meaningful."@en ;
+    skos:scopeNote """
+Variable attribute. Conditional. When required by CF, the value must
+be a valid UDUNITS string and must be semantically compatible with
+the variable's CF standard_name. Validation requires a CF-aware
+dataset validator.
+"""@en ;
     dct:conformsTo <https://cfconventions.org/> ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
@@ -637,11 +647,13 @@ ismap:coordinates_reference_system
     sh:name "coordinates_reference_system" ;
     skos:prefLabel "coordinates_reference_system"@en ;
     skos:definition "Coordinate reference system used to interpret the dataset spatial coordinates."@en ;
-    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    skos:scopeNote "Global attribute. Mandatory. The value must be EPSG:4979 (WGS 84 three-dimensional geographic coordinate reference system)."@en ;
+    dct:relation <https://epsg.io/4979> ;
+    sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
-    sh:minLength 1 ;
-    sh:message "Optional attribute 'coordinates_reference_system' has an invalid value or cardinality."@en .
+    sh:hasValue "EPSG:4979" ;
+    sh:message "The global attribute 'coordinates_reference_system' is mandatory and must have the value 'EPSG:4979'."@en .
 
 ismap:creator_type
     a sh:PropertyShape ;
