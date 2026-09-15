@@ -201,9 +201,6 @@ ismap:VariableQCShape
         ismap:qc_manual ,
         ismap:qc_method .
 
-
-
-
 #################################################################
 # Global attributes
 #################################################################
@@ -488,7 +485,8 @@ ismap:long_name
     skos:definition "A descriptive name for a variable, intended to be readable by humans."@en ;
     skos:scopeNote "Variable attribute. Recommended. Use a clear phrase; do not use an empty string."@en ;
     dct:conformsTo <https://cfconventions.org/> ;
-    sh:maxCount 1 ;
+    sh:minCount 1
+	sh:maxCount 1 ;
     sh:datatype xsd:string ;
     sh:minLength 1 ;
     sh:severity sh:Warning ;
@@ -636,6 +634,7 @@ ismap:conventions
     skos:prefLabel "conventions"@en ;
     skos:definition "Conventions used to define dataset metadata"@en ;
     skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    dct:conformsTo <https://cfconventions.org/> ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
     sh:minLength 1 ;
