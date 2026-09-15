@@ -321,19 +321,19 @@ ismap:creator_email
 #    sh:pattern "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" ;
 #    sh:message "The global attribute 'metadata_profile_version' must follow MAJOR.MINOR.PATCH, optionally followed by a suffix such as '-draft'."@en .
 
-ismap:Conventions
-    a sh:PropertyShape ;
-    sh:path ismap:Conventions ;
-    sh:name "Conventions" ;
-    skos:prefLabel "Conventions"@en ;
-    skos:definition "Comma-separated list of metadata and data conventions followed by the dataset."@en ;
-    skos:scopeNote "Global attribute. Mandatory. Should include CF, ACDD and this metadata application profile."@en ;
-    dct:conformsTo <https://cfconventions.org/> , <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:string ;
-    sh:minLength 1 ;
-    sh:message "The global attribute 'Conventions' must be present and must list the conventions followed by the dataset."@en .
+#ismap:Conventions
+#    a sh:PropertyShape ;
+#    sh:path ismap:Conventions ;
+#    sh:name "Conventions" ;
+#    skos:prefLabel "Conventions"@en ;
+#    skos:definition "Comma-separated list of metadata and data conventions followed by the dataset."@en ;
+#    skos:scopeNote "Global attribute. Mandatory. Should include CF, ACDD and this metadata application profile."@en ;
+#    dct:conformsTo <https://cfconventions.org/> , <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
+#    sh:minCount 1 ;
+#    sh:maxCount 1 ;
+#    sh:datatype xsd:string ;
+#    sh:minLength 1 ;
+#    sh:message "The global attribute 'Conventions' must be present and must list the conventions followed by the dataset."@en .
 
 ismap:keywords
     a sh:PropertyShape ;
