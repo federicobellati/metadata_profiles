@@ -1,4 +1,5 @@
 @prefix ismap: <https://w3id.org/cnr-ismar/metadata_profiles/danubius/insitu/1.0.0#> .
+@prefix ismapmap: <https://w3id.org/cnr-ismar/ontology/mapping/1.0.0#> .
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
