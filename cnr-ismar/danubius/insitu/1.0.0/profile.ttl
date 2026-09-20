@@ -1,7 +1,11 @@
 @prefix ismap: <https://w3id.org/cnr-ismar/metadata_profiles/danubius/insitu/1.0.0#> .
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcatap: <http://data.europa.eu/r5r/> .
+@prefix datacite:<http://purl.org/spar/datacite/> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix prof:  <http://www.w3.org/ns/dx/prof/> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
@@ -84,6 +88,7 @@ ismap:DatasetShape
         ismap:keywords_vocabulary ,
         ismap:license ,
         ismap:license_uri ,
+		ismap:lineage ,
         ismap:metadata_dataset ,
         ismap:metadata_source ,
         ismap:naming_authority ,
@@ -125,12 +130,7 @@ ismap:DatasetShape
         ismap:time_coverage_resolution ,
         ismap:time_coverage_start ,
         ismap:title ,
-
-        # Existing properties retained for backward compatibility
         ismap:creator_email ,
-        ismap:metadata_profile ,
-        ismap:metadata_profile_version ,
-        ismap:Conventions ,
         ismap:geospatial_lat_resolution ,
         ismap:geospatial_lon_resolution ,
         ismap:ship_call_sign ,
@@ -207,7 +207,7 @@ ismap:VariableQCShape
 
 ismap:conformsTo
     a sh:PropertyShape ;
-    sh:path dct:conformsTo ;
+    sh:path ismap:conformsTo ;
     sh:name "conformsTo" ;
     skos:prefLabel "conformsTo"@en ;
     skos:definition "Persistent URI identifying the metadata application profile used to create this metadata record."@en ;
@@ -291,46 +291,6 @@ ismap:creator_email
     sh:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ;
     sh:severity sh:Warning ;
     sh:message "The global attribute 'creator_email' is recommended and should contain a valid email address."@en .
-
-#ismap:metadata_profile
-#    a sh:PropertyShape ;
-#    sh:path ismap:metadata_profile ;
-#    sh:name "metadata_profile" ;
-#    skos:prefLabel "metadata_profile"@en ;
-#    skos:definition "Persistent URI identifying the metadata application profile followed by the dataset."@en ;
-#    skos:scopeNote "Global attribute. Mandatory. The value should point to the canonical profile or to the exact versioned profile document."@en ;
-#    sh:minCount 1 ;
-#    sh:maxCount 1 ;
-#    sh:datatype xsd:anyURI ;
-#    sh:pattern "^https?://" ;
-#    sh:message "The global attribute 'metadata_profile' must contain a resolvable HTTP or HTTPS URI."@en .
-#
-#ismap:metadata_profile_version
-#    a sh:PropertyShape ;
-#    sh:path ismap:metadata_profile_version ;
-#    sh:name "metadata_profile_version" ;
-#    skos:prefLabel "metadata_profile_version"@en ;
-#    skos:definition "Version of the metadata application profile used to describe the dataset."@en ;
-#    skos:scopeNote "Global attribute. Mandatory. Versioning follows MAJOR.MINOR.PATCH; suffixes such as '-draft' may be used before the first stable release."@en ;
-#    sh:minCount 1 ;
-#    sh:maxCount 1 ;
-#    sh:datatype xsd:string ;
-#    sh:pattern "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" ;
-#    sh:message "The global attribute 'metadata_profile_version' must follow MAJOR.MINOR.PATCH, optionally followed by a suffix such as '-draft'."@en .
-
-#ismap:Conventions
-#    a sh:PropertyShape ;
-#    sh:path ismap:Conventions ;
-#    sh:name "Conventions" ;
-#    skos:prefLabel "Conventions"@en ;
-#    skos:definition "Comma-separated list of metadata and data conventions followed by the dataset."@en ;
-#    skos:scopeNote "Global attribute. Mandatory. Should include CF, ACDD and this metadata application profile."@en ;
-#    dct:conformsTo <https://cfconventions.org/> , <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ;
-#    sh:minCount 1 ;
-#    sh:maxCount 1 ;
-#    sh:datatype xsd:string ;
-#    sh:minLength 1 ;
-#    sh:message "The global attribute 'Conventions' must be present and must list the conventions followed by the dataset."@en .
 
 ismap:keywords
     a sh:PropertyShape ;
@@ -634,8 +594,10 @@ ismap:conventions
     skos:prefLabel "conventions"@en ;
     skos:definition "Conventions used to define dataset metadata"@en ;
     skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
-    dct:conformsTo <https://cfconventions.org/> ;
-    sh:maxCount 1 ;
+	dct:conformsTo <https://cfconventions.org/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html> ;
+	dct:relation <https://cfconventions.org/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html#identification-of-conventions> ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
     sh:datatype xsd:string ;
     sh:minLength 1 ;
     sh:message "Optional attribute 'conventions' has an invalid value or cardinality."@en .
@@ -1419,12 +1381,22 @@ ismap:source
     sh:path ismap:source ;
     sh:name "source" ;
     skos:prefLabel "source"@en ;
-    skos:definition "The method of collection and production of the dataset (e.g., types of instrument, model, collection). If it was model-generated, source should name the model and its version. If it is observational, source should characterize it. This attribute is defined in the CF Conventions"@en ;
-    skos:scopeNote "Global attribute. Optional. If supplied, the value must satisfy the constraints below; omit the property rather than using an empty or placeholder value."@en ;
+    skos:definition
+        "Identification or description of the primary source or sources from which the dataset observations or values originate."@en ;
+    skos:scopeNote
+        """Global attribute. Mandatory in this profile. Identify or describe
+        the primary origin of the data. For observational data, indicate the
+        instrument, sensor, platform or acquisition system. For model-generated
+        data, indicate the model and its version when known. For derived data,
+        identify the source dataset or datasets when known. This property
+        describes the origin of the data, not their complete processing
+        history."""@en ;
+    sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
     sh:minLength 1 ;
-    sh:message "Optional attribute 'source' has an invalid value or cardinality."@en .
+    sh:message
+        "The global attribute 'source' is mandatory and must identify or describe the primary origin of the dataset."@en .
 
 ismap:standard_name_vocabulary
     a sh:PropertyShape ;
@@ -1473,6 +1445,35 @@ ismap:license_uri
     sh:datatype xsd:anyURI ;
     sh:pattern "^https?://" ;
     sh:message "Optional attribute 'license_uri' has an invalid value or cardinality."@en .
+
+ismap:lineage
+    a sh:PropertyShape ;
+    sh:path ismap:lineage ;
+    sh:name "lineage" ;
+    skos:prefLabel "lineage"@en ;
+    skos:definition
+        "A statement describing the history of the dataset and the principal acquisition, generation, processing, quality-control or transformation activities that produced its current state."@en ;
+    skos:scopeNote
+        """Global attribute. Mandatory in this profile. Provide a concise,
+        non-empty lineage statement describing the principal steps that
+        produced the current dataset from its source. Include significant
+        calibration, conversion, processing, quality-control, aggregation or
+        transformation activities when applicable. If no processing was
+        applied after acquisition, state this explicitly."""@en ;
+    dct:conformsTo
+        <https://standards.isotc211.org/19115/-1/> ,
+        <https://inspire.ec.europa.eu/id/document/tg/metadata-iso19139> ,
+        <https://semiceu.github.io/DCAT-AP/releases/3.0.1/> ,
+        <https://www.dublincore.org/specifications/dublin-core/dcmi-terms/terms/provenance/> ,
+        <https://schema.datacite.org/meta/kernel-4.7/> ,
+        <https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3> ,
+        <https://cfconventions.org/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html> ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:message
+        "The global attribute 'lineage' is mandatory and must describe the principal steps that produced the current dataset."@en .
 
 ismap:parameter_sdn_name
     a sh:PropertyShape ;
